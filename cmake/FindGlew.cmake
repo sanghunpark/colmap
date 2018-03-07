@@ -29,6 +29,7 @@ find_library(GLEW_LIBRARIES
     Glew
     glew
     glew32
+	glew32d # this is added by SanghunPark for debug mode.
     PATHS
     ${GLEW_LIBRARY_DIR_HINTS}
     /usr/lib64
