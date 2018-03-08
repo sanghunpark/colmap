@@ -274,8 +274,12 @@ def build_glew(args):
     build_cmake_project(args, os.path.join(path, "build/cmake/build"))
 
     if PLATFORM_IS_WINDOWS:
-        shutil.move(os.path.join(args.install_path, "bin/glew32.dll"),
-                    os.path.join(args.install_path, "lib/glew32.dll"))
+        if args.build_type == "Debug":
+            shutil.move(os.path.join(args.install_path, "bin/glew32d.dll"),
+                        os.path.join(args.install_path, "lib/glew32d.dll"))
+        else:
+            shutil.move(os.path.join(args.install_path, "bin/glew32.dll"),
+                        os.path.join(args.install_path, "lib/glew32.dll"))            
         os.remove(os.path.join(args.install_path, "bin/glewinfo.exe"))
         os.remove(os.path.join(args.install_path, "bin/visualinfo.exe"))
 
@@ -426,6 +430,16 @@ def build_post_process(args):
             copy_file_if_not_exists(
                 os.path.join(args.qt_path, "bin/Qt5Widgets.dll"),
                 os.path.join(args.install_path, "lib/Qt5Widgets.dll"))
+            copy_file_if_not_exists(
+                os.path.join(args.qt_path, "bin/Qt5Cored.dll"),
+                os.path.join(args.install_path, "lib/Qt5Cored.dll"))
+            if args.build_type == "Debug":
+                copy_file_if_not_exists(
+                    os.path.join(args.qt_path, "bin/Qt5Guid.dll"),
+                    os.path.join(args.install_path, "lib/Qt5Guid.dll"))
+                copy_file_if_not_exists(
+                    os.path.join(args.qt_path, "bin/Qt5Widgetsd.dll"),
+                    os.path.join(args.install_path, "lib/Qt5Widgetsd.dll"))
             mkdir_if_not_exists(
                 os.path.join(args.install_path, "bin/platforms"))
             copy_file_if_not_exists(
